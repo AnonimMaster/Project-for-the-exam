@@ -33,7 +33,12 @@ public class PlayerController : MonoBehaviour
 	{
 		if (GroundColliders.Count > 0)
 		{
-			isGrounded = true;
+			foreach(var coll in GroundColliders)
+			{
+				if(coll.tag == "Ground")
+					isGrounded = true;
+			}
+			
 		}
 		else
 		{
@@ -50,7 +55,8 @@ public class PlayerController : MonoBehaviour
 			Sprite.flipX = true;
 			FaceLeft = true;
 		}
-		else if (Input.GetKey(KeyCode.D) && FaceLeft == true)
+
+		if(Input.GetKey(KeyCode.D) && FaceLeft == true)
 		{
 			Sprite.flipX = false;
 			FaceLeft = false;
@@ -90,8 +96,8 @@ public class PlayerController : MonoBehaviour
     }
 	void Move()
 	{
-		Vector3 tempvector = Vector3.right * Input.GetAxis("Horizontal");
-		transform.position = Vector3.MoveTowards(transform.position, transform.position + tempvector, Speed * Time.deltaTime);
+		Vector3 vector = Vector3.right * Input.GetAxis("Horizontal");
+		transform.position = Vector3.MoveTowards(transform.position, transform.position + vector, Speed * Time.deltaTime);
 	}
 
 	void Jump()
