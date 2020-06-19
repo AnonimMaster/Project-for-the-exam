@@ -282,6 +282,18 @@ Rigidbody2D:
     type: 3}
   m_PrefabInstance: {fileID: 7420842171413451769}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &1749361957 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4878126351303828301, guid: a0825093fc1cd954496de806c517d4c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7420842171413451769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1749361958 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1109056701980858404, guid: a0825093fc1cd954496de806c517d4c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7420842171413451769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1749361959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,9 +306,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c3b11f37d852540a0dd2265ebc5422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
-  JumpForce: 300
-  Rigidbody: {fileID: 1749361956}
+  MaxSpeed: 2
+  Speed: 1.25
+  CountJump: 1
+  PowerJump: 5
+  MaxJump: 2
+  isGrounded: 0
+  FaceLeft: 0
+  Sprite: {fileID: 0}
+  RigidBody: {fileID: 1749361956}
+  Box: {fileID: 1749361958}
+  Circle: {fileID: 1749361957}
+  GroundColliders: []
 --- !u!1 &1845920176
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,12 +729,12 @@ PrefabInstance:
     - target: {fileID: 7420842171811722970, guid: a0825093fc1cd954496de806c517d4c2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.105
       objectReference: {fileID: 0}
     - target: {fileID: 7420842171811722970, guid: a0825093fc1cd954496de806c517d4c2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.183
       objectReference: {fileID: 0}
     - target: {fileID: 7420842171811722970, guid: a0825093fc1cd954496de806c517d4c2,
         type: 3}
