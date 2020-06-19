@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //Пихаем всю логику управления персонажем в один класс. Да за такое ломают руки, но всё же почему бы и нет?
 public class PlayerController : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour
 	public float Speed;
 	public int CountJump;
 	public float PowerJump;
-	[SerializeField] private int MaxJump;
+	public int MaxJump;
 
 	[SerializeField] private bool isGrounded;
 	[SerializeField] private bool FaceLeft = false;
@@ -17,14 +18,14 @@ public class PlayerController : MonoBehaviour
 	[Header("Зависимости")]
 	[SerializeField] private SpriteRenderer Sprite;
 	[SerializeField] private Rigidbody2D RigidBody;
-	[SerializeField] private BoxCollider2D Box;
 	[SerializeField] private CircleCollider2D Circle;
+	[SerializeField] private BoxCollider2D Box;
 	[Header("Костыли")]
 	[SerializeField] private List<Collider2D> GroundColliders;
 	void Start()
 	{
-		Circle = GetComponent<CircleCollider2D>();
 		Box = GetComponent<BoxCollider2D>();
+		Circle = GetComponent<CircleCollider2D>();
 		RigidBody = GetComponent<Rigidbody2D>();
 		Sprite = GetComponent<SpriteRenderer>();
 	}
@@ -90,10 +91,10 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void OnCollisionExit2D(Collision2D coll)
-    {
-        if (GroundColliders.Contains(coll.collider))
-            GroundColliders.Remove(coll.collider);
-    }
+	{
+		if (GroundColliders.Contains(coll.collider))
+			GroundColliders.Remove(coll.collider);
+	}
 	void Move()
 	{
 		Vector3 vector = Vector3.right * Input.GetAxis("Horizontal");
