@@ -7,4 +7,7 @@ public class PlayerData : ScriptableObject
 {
 	public int Score;
 	public int Life;
+	public int MaxLife;
+	public int MaxJump;
+	public int CountJump;
 }

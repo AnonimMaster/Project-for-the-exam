@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dc405d7a41054caa5f8a352e87345, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Score: 0
-  Life: 0
+  Score: 260
+  Life: 1
+  MaxLife: 1
+  MaxJump: 1
+  CountJump: 1

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 //Пихаем всю логику управления персонажем в один класс. Да за такое ломают руки, но всё же почему бы и нет?
@@ -8,30 +9,39 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private float MaxSpeed;
 	public float Speed;
-	public int CountJump;
 	public float PowerJump;
-	public int MaxJump;
+	public Transform SpawnPoint;
 
 	[SerializeField] private bool isGrounded;
 	[SerializeField] private bool FaceLeft = false;
 
 	[Header("Зависимости")]
+	[SerializeField] private Animator animator;
+	[SerializeField] private PlayerData Data;
 	[SerializeField] private SpriteRenderer Sprite;
 	[SerializeField] private Rigidbody2D RigidBody;
 	[SerializeField] private CircleCollider2D Circle;
 	[SerializeField] private BoxCollider2D Box;
 	[Header("Костыли")]
 	[SerializeField] private List<Collider2D> GroundColliders;
+	Transform PlayerTransform;
 	void Start()
 	{
 		Box = GetComponent<BoxCollider2D>();
 		Circle = GetComponent<CircleCollider2D>();
 		RigidBody = GetComponent<Rigidbody2D>();
 		Sprite = GetComponent<SpriteRenderer>();
+		PlayerTransform = GetComponent<Transform>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
+		if (Data.Life <= 0)
+		{
+			Death();
+		}
+
 		if (GroundColliders.Count > 0)
 		{
 			foreach(var coll in GroundColliders)
@@ -57,7 +67,7 @@ public class PlayerController : MonoBehaviour
 			FaceLeft = true;
 		}
 
-		if(Input.GetKey(KeyCode.D) && FaceLeft == true)
+		if(Input.GetKey(KeyCode.D))
 		{
 			Sprite.flipX = false;
 			FaceLeft = false;
@@ -70,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
 		if (isGrounded)
 		{
-			CountJump = MaxJump;
+			Data.CountJump = Data.MaxJump;
 		}
 	}
 
@@ -97,16 +107,33 @@ public class PlayerController : MonoBehaviour
 	}
 	void Move()
 	{
+		animator.Play("Walk");
 		Vector3 vector = Vector3.right * Input.GetAxis("Horizontal");
 		transform.position = Vector3.MoveTowards(transform.position, transform.position + vector, Speed * Time.deltaTime);
 	}
 
 	void Jump()
 	{
-		if (CountJump > 0)
+		if (Data.CountJump > 0)
 		{
-			CountJump--;
+			Data.CountJump--;
+			animator.Play("Jump");
 			RigidBody.velocity = Vector2.up * PowerJump;
 		}
+	}
+
+	public void Death()
+	{
+		Data.Score = 0;
+		Data.MaxJump = 1;
+		Data.CountJump = 1;
+		Data.Life = Data.MaxLife;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	public void Damage()
+	{
+		Data.Life--;
+		PlayerTransform.position = SpawnPoint.position;
 	}
 }
