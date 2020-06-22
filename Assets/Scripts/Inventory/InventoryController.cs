@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Неоправданно излишняя реализация инвентаря, для одного лишь ключа. Будем считать что, расчитываем на продолжение разработки(продолжение врятли будет)
 public class InventoryController : MonoBehaviour
 {
     public ItemState[] Cells;

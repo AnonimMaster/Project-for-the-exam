@@ -6,7 +6,7 @@ using UnityEngine;
 public class CollectionsItems : MonoBehaviour
 {
 	public PlayerData Data;
-	bool collisonOccured = false;
+	protected bool collisonOccured = false;
 	public virtual void Collection()
 	{
 		Destroy(this.gameObject);

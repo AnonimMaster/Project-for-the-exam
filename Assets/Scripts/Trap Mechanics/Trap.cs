@@ -6,6 +6,12 @@ public class Trap : MonoBehaviour
 {
 	public PlayerController Player;
 	bool collisonOccured = false;
+
+	void Start()
+	{
+		Player = FindObjectOfType<PlayerController>();
+	}
+
 	void OnCollisionStay2D(Collision2D collision)
 	{
 		if (collisonOccured)
@@ -14,7 +20,7 @@ public class Trap : MonoBehaviour
 		{
 			collisonOccured = true;
 			Player.Damage();
-			Invoke("Reset", 0.01f);
+			Invoke("Reset", 1f);
 		}
 	}
 

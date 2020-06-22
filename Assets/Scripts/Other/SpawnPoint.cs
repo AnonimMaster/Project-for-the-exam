@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneLife : MonoBehaviour
+public class SpawnPoint : MonoBehaviour
 {
-	public PlayerData Data;
-	bool colliderOccured = false;
+	public bool colliderOccured = false;
+	public Transform point;
+	public PlayerController Player;
 
-	public void Collection()
+	void Start()
 	{
-		if (Data.Life < Data.MaxLife)
-		{
-			Data.Life++;
-			Destroy(this.gameObject);
-		}
+		point = GetComponent<Transform>();
+		Player = FindObjectOfType<PlayerController>();
 	}
 
 	void OnTriggerEnter2D(Collider2D collider)
@@ -23,7 +21,7 @@ public class RuneLife : MonoBehaviour
 		if (collider.gameObject.tag == "Player")
 		{
 			colliderOccured = true;
-			Collection();
+			Player.SetSpawn(point);
 			Invoke("Reset", 0.01f);
 		}
 	}

@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 //Пихаем всю логику управления персонажем в один класс. Да за такое ломают руки, но всё же почему бы и нет?
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private float MaxSpeed;
 	public float Speed;
 	public float PowerJump;
 	public Transform SpawnPoint;
@@ -58,7 +57,14 @@ public class PlayerController : MonoBehaviour
 			
 		if (Input.GetButton("Horizontal"))
 		{
+			animator.SetBool("PerformRun", true);
+			animator.SetBool("PerformIdle", false);
 			Move();
+		}
+		else
+		{
+			animator.SetBool("PerformRun", false);
+			animator.SetBool("PerformIdle", true);
 		}
 
 		if(Input.GetKeyDown(KeyCode.A))
@@ -77,10 +83,25 @@ public class PlayerController : MonoBehaviour
 		{
 			Jump();
 		}
+		
+		if (Input.GetKey("space"))
+		{
+			animator.SetBool("PerformIdle", false);
+			animator.SetBool("PerformJump", true);
+		}
+		else
+		{
+			animator.SetBool("PerformJump", false);
+		}
 
 		if (isGrounded)
 		{
 			Data.CountJump = Data.MaxJump;
+		}
+
+		if (Input.GetKey(KeyCode.Q))
+		{
+			Application.Quit();
 		}
 	}
 
@@ -107,7 +128,6 @@ public class PlayerController : MonoBehaviour
 	}
 	void Move()
 	{
-		animator.Play("Walk");
 		Vector3 vector = Vector3.right * Input.GetAxis("Horizontal");
 		transform.position = Vector3.MoveTowards(transform.position, transform.position + vector, Speed * Time.deltaTime);
 	}
@@ -117,7 +137,6 @@ public class PlayerController : MonoBehaviour
 		if (Data.CountJump > 0)
 		{
 			Data.CountJump--;
-			animator.Play("Jump");
 			RigidBody.velocity = Vector2.up * PowerJump;
 		}
 	}
@@ -135,5 +154,10 @@ public class PlayerController : MonoBehaviour
 	{
 		Data.Life--;
 		PlayerTransform.position = SpawnPoint.position;
+	}
+
+	public void SetSpawn(Transform point)
+	{
+		SpawnPoint = point;
 	}
 }
